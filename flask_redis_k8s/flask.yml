@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+  labels:
+    app: flask-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flask-app
+      svc: front
+  template:
+    metadata:
+      labels:
+        app: flask-app
+        svc: front
+    spec:
+      containers:
+      - name: flask
+        image: flask:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            memory: "256Mi"
